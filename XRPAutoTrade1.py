@@ -8,7 +8,7 @@ secret = "jZBIU6tTAkrr6aXPZRUSwdPkEGSLiBqdKaPxxORm"
 
 def send_message(msg):
     """slcak 메세지 보내기"""
-    url = "https://hooks.slack.com/services/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"
+    url = "https://hooks.slack.com/services/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"
     data = {'text':msg}
     resp = requests.post(url=url, json=data)
     return resp
