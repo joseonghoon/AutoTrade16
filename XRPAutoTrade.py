@@ -38,6 +38,19 @@ def get_current_price(ticker):
 upbit = pyupbit.Upbit(access, secret)
 print("autotrade start")
 
+# print(get_target_price('KRW-XRP', 0.5))
+# print(get_current_price('KRW-XRP'))
+
+# print(get_target_price('KRW-BTC', 0.5))
+# print(get_current_price('KRW-BTC'))
+
+# print(get_target_price('KRW-ETH', 0.5))
+# print(get_current_price('KRW-ETH'))
+
+# print(get_target_price('KRW-BORA', 0.5))
+# print(get_current_price('KRW-BORA'))
+
+
  # 자동매매 시작
 while True:
      try:
@@ -46,16 +59,52 @@ while True:
          end_time = start_time + datetime.timedelta(days=1)
 
          if start_time < now < end_time - datetime.timedelta(seconds=10):
+             #리플
              target_price = get_target_price("KRW-XRP", 0.5)
              current_price = get_current_price("KRW-XRP")
              if target_price < current_price:
                  krw = get_balance("KRW")
                  if krw > 5000:
                      upbit.buy_market_order("KRW-XRP", krw*0.9995)
+             #비트코인        
+             target_price = get_target_price("KRW-BTC", 0.5)
+             current_price = get_current_price("KRW-BTC")
+             if target_price < current_price:
+                 krw = get_balance("KRW")
+                 if krw > 5000:
+                     upbit.buy_market_order("KRW-BTC", krw*0.9995)
+             #이더리움
+             target_price = get_target_price("KRW-ETH", 0.5)
+             current_price = get_current_price("KRW-ETH")
+             if target_price < current_price:
+                 krw = get_balance("KRW")
+                 if krw > 5000:
+                     upbit.buy_market_order("KRW-ETH", krw*0.9995)
+             #보라        
+             target_price = get_target_price("KRW-BORA", 0.5)
+             current_price = get_current_price("KRW-BORA")
+             if target_price < current_price:
+                 krw = get_balance("KRW")
+                 if krw > 5000:
+                     upbit.buy_market_order("KRW-BORA", krw*0.9995)         
+                     
          else:
+             #리플
              xrp = get_balance("XRP")
              if xrp > 0.00008:
                  upbit.sell_market_order("KRW-XRP", xrp*0.9995)
+            #비트코인
+             btc = get_balance("BTC")
+             if btc > 0.00008:
+                 upbit.sell_market_order("KRW-BTC", btc*0.9995)
+             #이더리움
+             eth = get_balance("ETH")
+             if eth > 0.00008:
+                 upbit.sell_market_order("KRW-ETH", eth*0.9995)
+            #보라
+             bora = get_balance("BORA")
+             if bora > 0.00008:
+                 upbit.sell_market_order("KRW-BORA", bora*0.9995)          
          time.sleep(1)
      except Exception as e:
          print(e)
