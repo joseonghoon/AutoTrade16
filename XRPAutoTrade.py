@@ -45,7 +45,7 @@ def get_current_price(ticker):
  # 로그인
 upbit = pyupbit.Upbit(access, secret)
 print("autotrade start")
-send_message("로그인 완료 실행 시작")
+send_message("login and start")
 
 # print(get_target_price('KRW-XRP', 0.5))
 # print(get_current_price('KRW-XRP'))
