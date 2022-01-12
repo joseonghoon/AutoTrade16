@@ -5,7 +5,7 @@ import requests
 
 access = "bsYWp701yJmtgcHxwvVxgAdrlxJYyE8UU1uvMpQa"
 secret = "jZBIU6tTAkrr6aXPZRUSwdPkEGSLiBqdKaPxxORm"
-myToken = "xoxb-2925112561509-2951781580992-5HCIXNNBWBSHuv1DCI39lN59"
+myToken = "xoxb-2925112561509-2951781580992-mIgAtnG7allfTiRI4m1cfYP0"
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -69,62 +69,89 @@ while True:
          now = datetime.datetime.now()
          start_time = get_start_time("KRW-XRP")
          end_time = start_time + datetime.timedelta(days=1)
+         
+         #매수 목표가 설정
+         xrp_target_price = get_target_price("KRW-XRP", 0.3)
+         btc_target_price = get_target_price("KRW-BTC", 0.6)
+         eth_target_price = get_target_price("KRW-ETH", 0.4)
+         bora_target_price = get_target_price("KRW-BORA", 0.1)
+         doge_target_price = get_target_price("KRW-DOGE", 0.3)
+         
+         if now == start_time:
+             #장 시작시 매수 목표가 알림
+             post_message(myToken,"#trade","today target price" 
+                        + "\nXRP : "+ str(xrp_target_price) 
+                        + "\nBTC : "+ str(btc_target_price)
+                        + "\nETH : "+ str(eth_target_price) 
+                        + "\nBORA : "+ str(bora_target_price)
+                        + "\nDOGE : "+ str(doge_target_price))
+             
+             
 
          if start_time < now < end_time - datetime.timedelta(seconds=10):
+             # 9900원 이상 보유시 1만원 매수
              #리플
-             target_price = get_target_price("KRW-XRP", 0.5)
              current_price = get_current_price("KRW-XRP")
-             if target_price < current_price:
+             if xrp_target_price < current_price:
                  krw = get_balance("KRW")
-                 if krw > 5000:
-                     buy_xrp = upbit.buy_market_order("KRW-XRP", krw*0.9995)
-                     post_message(myToken,"#trade", "XRP buy : " +str(buy_xrp))
+                 if krw > 9900:
+                     upbit.buy_market_order("KRW-XRP", 9999)
+                     post_message(myToken,"#trade", "XRP buy")
              #비트코인        
-             target_price = get_target_price("KRW-BTC", 0.5)
              current_price = get_current_price("KRW-BTC")
-             if target_price < current_price:
+             if btc_target_price < current_price:
                  krw = get_balance("KRW")
-                 if krw > 5000:
-                     buy_btc = upbit.buy_market_order("KRW-BTC", krw*0.9995)
-                     post_message(myToken,"#trade", "BTC buy : " +str(buy_btc))
+                 if krw > 9900:
+                     upbit.buy_market_order("KRW-BTC", 9999)
+                     post_message(myToken,"#trade", "BTC buy")
              #이더리움
-             target_price = get_target_price("KRW-ETH", 0.5)
              current_price = get_current_price("KRW-ETH")
-             if target_price < current_price:
+             if eth_target_price < current_price:
                  krw = get_balance("KRW")
-                 if krw > 5000:
-                     buy_eth = upbit.buy_market_order("KRW-ETH", krw*0.9995)
-                     post_message(myToken,"#trade", "ETH buy : " +str(buy_eth))
+                 if krw > 9900:
+                     upbit.buy_market_order("KRW-ETH", 9999)
+                     post_message(myToken,"#trade", "ETH buy")
              #보라        
-             target_price = get_target_price("KRW-BORA", 0.5)
              current_price = get_current_price("KRW-BORA")
-             if target_price < current_price:
+             if bora_target_price < current_price:
                  krw = get_balance("KRW")
-                 if krw > 5000:
-                     buy_bora = upbit.buy_market_order("KRW-BORA", krw*0.9995) 
-                     post_message(myToken,"#trade", "BORA buy : " +str(buy_bora))        
+                 if krw > 9900:
+                     upbit.buy_market_order("KRW-BORA", 9999) 
+                     post_message(myToken,"#trade", "BORA buy") 
+            #도지       
+             current_price = get_current_price("KRW-DOGE")
+             if doge_target_price < current_price:
+                 krw = get_balance("KRW")
+                 if krw > 9900:
+                     upbit.buy_market_order("KRW-DOGE", 9999) 
+                     post_message(myToken,"#trade", "DOGE buy")       
                      
          else:
              #리플
              xrp = get_balance("XRP")
              if xrp > 0.00008:
-                 sell_xrp = upbit.sell_market_order("KRW-XRP", xrp*0.9995)
-                 post_message(myToken,"#trade", "XRP sell : " +str(sell_xrp))
+                 upbit.sell_market_order("KRW-XRP", xrp)
+                 post_message(myToken,"#trade", "XRP sell")
             #비트코인
              btc = get_balance("BTC")
              if btc > 0.00008:
-                 sell_btc = upbit.sell_market_order("KRW-BTC", btc*0.9995)
-                 post_message(myToken,"#trade", "BTC sell : " +str(sell_btc))
+                 upbit.sell_market_order("KRW-BTC", btc)
+                 post_message(myToken,"#trade", "BTC sell")
              #이더리움
              eth = get_balance("ETH")
              if eth > 0.00008:
-                 sell_eth = upbit.sell_market_order("KRW-ETH", eth*0.9995)
-                 post_message(myToken,"#trade", "ETH sell : " +str(sell_eth)) 
+                 upbit.sell_market_order("KRW-ETH", eth)
+                 post_message(myToken,"#trade", "ETH sell") 
             #보라
              bora = get_balance("BORA")
              if bora > 0.00008:
-                 sell_bora = upbit.sell_market_order("KRW-BORA", bora*0.9995)
-                 post_message(myToken,"#trade", "BORA sell : " +str(sell_bora))          
+                 upbit.sell_market_order("KRW-BORA", bora)
+                 post_message(myToken,"#trade", "BORA sell")
+            #도지
+             doge = get_balance("DOGE")
+             if bora > 0.00008:
+                 upbit.sell_market_order("KRW-DOGE", doge)
+                 post_message(myToken,"#trade", "DOGE sell")           
          time.sleep(1)
      except Exception as e:
          print(e)
