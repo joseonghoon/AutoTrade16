@@ -5,7 +5,7 @@ import requests
 
 access = "bsYWp701yJmtgcHxwvVxgAdrlxJYyE8UU1uvMpQa"
 secret = "jZBIU6tTAkrr6aXPZRUSwdPkEGSLiBqdKaPxxORm"
-myToken = "xoxb-2925112561509-2951781580992-5CcEVWHfgGF6qDxkCKxPkYk1"
+myToken = ""
 
 
 def post_message(token, channel, text):
@@ -67,11 +67,11 @@ while True:
          
          #잔고 조회    
          krw = get_balance("KRW")
-         xrp = get_balance("KRW-XRP")
-         btc = get_balance("KRW-BTC")
-         eth = get_balance("KRW-ETH")
-         bora = get_balance("KRW-BORA")
-         doge = get_balance("KRW-DOGE") 
+         xrp = upbit.get_balance("KRW-XRP")
+         btc = upbit.get_balance("KRW-BTC")
+         eth = upbit.get_balance("KRW-ETH")
+         bora = upbit.get_balance("KRW-BORA")
+         doge = upbit.get_balance("KRW-DOGE") 
          
          if now == start_time:
              #장 시작시 매수 목표가 알림
@@ -82,36 +82,36 @@ while True:
                         + "\nBORA : "+ str(bora_target_price)
                         + "\nDOGE : "+ str(doge_target_price))   
 
-         if start_time < now < end_time - datetime.timedelta(seconds=10):
+         elif start_time < now < end_time - datetime.timedelta(seconds=10):
              # 9900원 이상 보유시 1만원 매수
              #리플
              current_price = get_current_price("KRW-XRP")
              if xrp_target_price < current_price:
-                 if krw > 9900 & xrp < 2:
+                 if krw > 9900 and xrp < 2:
                      upbit.buy_market_order("KRW-XRP", 9999)
                      post_message(myToken,"#trade", "XRP buy")
              #비트코인        
              current_price = get_current_price("KRW-BTC")
              if btc_target_price < current_price:
-                 if krw > 9900 & btc < 0.0002:
+                 if krw > 9900 and btc < 0.0002:
                      upbit.buy_market_order("KRW-BTC", 9999)
                      post_message(myToken,"#trade", "BTC buy")
              #이더리움
              current_price = get_current_price("KRW-ETH")
              if eth_target_price < current_price:
-                 if krw > 9900 & eth < 0.002:
+                 if krw > 9900 and eth < 0.002:
                      upbit.buy_market_order("KRW-ETH", 9999)
                      post_message(myToken,"#trade", "ETH buy")
              #보라        
              current_price = get_current_price("KRW-BORA")
              if bora_target_price < current_price:
-                 if krw > 9900 & bora < 2:
+                 if krw > 9900 and bora < 2:
                      upbit.buy_market_order("KRW-BORA", 9999) 
                      post_message(myToken,"#trade", "BORA buy") 
             #도지       
              current_price = get_current_price("KRW-DOGE")
              if doge_target_price < current_price:
-                 if krw > 9900 & doge < 2:
+                 if krw > 9900 and doge < 2:
                      upbit.buy_market_order("KRW-DOGE", 9999) 
                      post_message(myToken,"#trade", "DOGE buy")       
                      
