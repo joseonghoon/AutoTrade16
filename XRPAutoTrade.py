@@ -59,7 +59,7 @@ while True:
          end_time = start_time + datetime.timedelta(days=1)
          
          #매수 목표가 설정
-         xrp_target_price = get_target_price("KRW-XRP", 0.1)
+         xrp_target_price = get_target_price("KRW-XRP", 0.3)
          ada_target_price = get_target_price("KRW-ADA", 0.6)
          etc_target_price = get_target_price("KRW-ETC", 0.4)
          bora_target_price = get_target_price("KRW-BORA", 0.3)
@@ -99,7 +99,7 @@ while True:
              #이더리움클래식
              current_price = get_current_price("KRW-ETC")
              if etc_target_price < current_price <= etc_target_price + (etc_target_price*0.002):
-                 if krw > 9900 and etc < 0.3:
+                 if krw > 9900 and etc < 0.2:
                      upbit.buy_market_order("KRW-ETC", 9999)
                      post_message(myToken,"#trade", "ETC buy")
              #보라        
@@ -118,29 +118,34 @@ while True:
              #매도 (4칸차이나면 매도)
              #리플
              current_price = get_current_price("KRW-XRP")
-             if current_price >= xrp_target_price+(xrp_target_price*0.004):
-                 upbit.sell_market_order("KRW-XRP", xrp)
-                 post_message(myToken,"#trade", "XRP sell")
+             if xrp > 0.0000:
+                if current_price >= xrp_target_price+(xrp_target_price*0.004):
+                    upbit.sell_market_order("KRW-XRP", xrp)
+                    post_message(myToken,"#trade", "XRP sell")
              #에이다
-             current_price = get_current_price("KRW-ADA")
-             if current_price >= ada_target_price+(ada_target_price*0.01):
-                 upbit.sell_market_order("KRW-ADA", ada)
-                 post_message(myToken,"#trade", "ADA sell")
+             if ada > 0.0000:
+                current_price = get_current_price("KRW-ADA")
+                if current_price >= ada_target_price+(ada_target_price*0.01):
+                    upbit.sell_market_order("KRW-ADA", ada)
+                    post_message(myToken,"#trade", "ADA sell")
              #이더리움클래식
-             current_price = get_current_price("KRW-ETC")
-             if current_price >= etc_target_price+(etc_target_price*0.008):
-                 upbit.sell_market_order("KRW-ETC", etc)
-                 post_message(myToken,"#trade", "ETC sell")
+             if etc > 0.0000:
+                current_price = get_current_price("KRW-ETC")
+                if current_price >= etc_target_price+(etc_target_price*0.008):
+                    upbit.sell_market_order("KRW-ETC", etc)
+                    post_message(myToken,"#trade", "ETC sell")
              #보라
-             current_price = get_current_price("KRW-BORA")
-             if current_price >= bora_target_price+(bora_target_price*0.1):
-                 upbit.sell_market_order("KRW-BORA", bora)
-                 post_message(myToken,"#trade", "BORA sell")
+             if bora > 0.0000:
+                current_price = get_current_price("KRW-BORA")
+                if current_price >= bora_target_price+(bora_target_price*0.1):
+                    upbit.sell_market_order("KRW-BORA", bora)
+                    post_message(myToken,"#trade", "BORA sell")
              #도지
-             current_price = get_current_price("KRW-DOGE")
-             if current_price >= doge_target_price+(doge_target_price*0.1):
-                 upbit.sell_market_order("KRW-DOGE", doge)
-                 post_message(myToken,"#trade", "DOGE sell")
+             if doge > 0.0000:
+                current_price = get_current_price("KRW-DOGE")
+                if current_price >= doge_target_price+(doge_target_price*0.1):
+                    upbit.sell_market_order("KRW-DOGE", doge)
+                    post_message(myToken,"#trade", "DOGE sell")
                            
                      
          else:
