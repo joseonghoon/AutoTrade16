@@ -61,9 +61,9 @@ while True:
          #매수 목표가 설정
          xrp_target_price = get_target_price("KRW-XRP", 0.3)
          ada_target_price = get_target_price("KRW-ADA", 0.6)
-         etc_target_price = get_target_price("KRW-ETC", 0.4)
-         bora_target_price = get_target_price("KRW-BORA", 0.3)
-         doge_target_price = get_target_price("KRW-DOGE", 0.3)
+         etc_target_price = get_target_price("KRW-ETC", 0.5)
+         bora_target_price = get_target_price("KRW-BORA", 0.2)
+         doge_target_price = get_target_price("KRW-DOGE", 0.2)
          
          #잔고 조회    
          krw = get_balance("KRW")
@@ -73,7 +73,7 @@ while True:
          bora = upbit.get_balance("KRW-BORA")
          doge = upbit.get_balance("KRW-DOGE") 
          
-         if now == start_time:
+         if now == end_time + datetime.timedelta(seconds=30):
              #장 시작시 매수 목표가 알림
              post_message(myToken,"#trade","today target price" 
                         + "\nXRP : "+ str(xrp_target_price) 
@@ -119,7 +119,7 @@ while True:
              #리플
              current_price = get_current_price("KRW-XRP")
              if xrp > 0.0000:
-                if current_price >= xrp_target_price+(xrp_target_price*0.004):
+                if current_price >= xrp_target_price+(xrp_target_price*0.01):
                     upbit.sell_market_order("KRW-XRP", xrp)
                     post_message(myToken,"#trade", "XRP sell")
              #에이다
@@ -137,7 +137,7 @@ while True:
              #보라
              if bora > 0.0000:
                 current_price = get_current_price("KRW-BORA")
-                if current_price >= bora_target_price+(bora_target_price*0.1):
+                if current_price >= bora_target_price+(bora_target_price*0.035):
                     upbit.sell_market_order("KRW-BORA", bora)
                     post_message(myToken,"#trade", "BORA sell")
              #도지
