@@ -59,11 +59,11 @@ while True:
          end_time = start_time + datetime.timedelta(days=1)
          
          #매수 목표가 설정
-         xrp_target_price = get_target_price("KRW-XRP", 0.3)
-         ada_target_price = get_target_price("KRW-ADA", 0.6)
-         etc_target_price = get_target_price("KRW-ETC", 0.5)
+         xrp_target_price = get_target_price("KRW-XRP", 0.2)
+         ada_target_price = get_target_price("KRW-ADA", 0.4)
+         etc_target_price = get_target_price("KRW-ETC", 0.1)
          bora_target_price = get_target_price("KRW-BORA", 0.2)
-         doge_target_price = get_target_price("KRW-DOGE", 0.2)
+         doge_target_price = get_target_price("KRW-DOGE", 0.1)
          
          #잔고 조회    
          krw = get_balance("KRW")
@@ -73,16 +73,16 @@ while True:
          bora = upbit.get_balance("KRW-BORA")
          doge = upbit.get_balance("KRW-DOGE") 
          
-         if now == end_time + datetime.timedelta(seconds=30):
-             #장 시작시 매수 목표가 알림
-             post_message(myToken,"#trade","today target price" 
-                        + "\nXRP : "+ str(xrp_target_price) 
-                        + "\nADA : "+ str(ada_target_price)
-                        + "\nETC : "+ str(etc_target_price) 
-                        + "\nBORA : "+ str(bora_target_price)
-                        + "\nDOGE : "+ str(doge_target_price))   
+        #  if now == end_time + datetime.timedelta(seconds=30):
+        #      #장 시작시 매수 목표가 알림
+        #      post_message(myToken,"#trade","today target price" 
+        #                 + "\nXRP : "+ str(xrp_target_price) 
+        #                 + "\nADA : "+ str(ada_target_price)
+        #                 + "\nETC : "+ str(etc_target_price) 
+        #                 + "\nBORA : "+ str(bora_target_price)
+        #                 + "\nDOGE : "+ str(doge_target_price))   
 
-         elif start_time < now < end_time - datetime.timedelta(seconds=10):
+         if start_time < now < end_time - datetime.timedelta(seconds=10):
              # 9900원 이상 보유시 1만원 매수 (2칸차이 매수)
              #리플
              current_price = get_current_price("KRW-XRP")
@@ -92,7 +92,7 @@ while True:
                      post_message(myToken,"#trade", "XRP buy")
              #에이다
              current_price = get_current_price("KRW-ADA")
-             if ada_target_price < current_price <= ada_target_price + (ada_target_price*0.006):
+             if ada_target_price < current_price <= ada_target_price + (ada_target_price*0.008):
                  if krw > 9900 and ada < 2:
                      upbit.buy_market_order("KRW-ADA", 9999)
                      post_message(myToken,"#trade", "ADA buy")
